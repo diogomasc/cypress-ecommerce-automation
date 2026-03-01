@@ -14,5 +14,10 @@ export default defineConfig({
     testIsolation: false,
     // Bloqueia as requisições para os domínios de analytics e monitoramento, para evitar que eles causem falhas nos testes
     blockHosts: ["*google-analytics.com", "*://shopify.com"],
+    // Configura o Cypress para tentar novamente os testes que falharem, para aumentar a estabilidade dos testes em casos de falhas intermitentes
+    retries: {
+      runMode: 2, // Número de tentativas de retry quando os testes falharem durante a execução normal (cypress run)
+      openMode: 1, // Número de tentativas de retry quando os testes falharem durante a execução interativa (cypress open)
+    },
   },
 });

@@ -11,17 +11,11 @@ Cypress.Commands.add("ignoreCollectError", () => {
   });
 });
 
-// Custom command para limpar o carrinho de compras
+// Custom command para limpar o carrinho de compras usando a API do Shopify, garantindo que o estado do carrinho seja limpo antes de cada teste
 Cypress.Commands.add("cleanCart", () => {
-  cy.visit("/cart");
-  cy.get("body").then(($body) => {
-    const btnRemove = $body.find(".remove.desktop a:visible");
-    if (btnRemove.length > 0) {
-      cy.wrap(btnRemove).first().click();
-      cy.wait(1000);
-      cy.cleanCart();
-    } else {
-      cy.log("O carrinho já está vazio!");
-    }
+  return cy.request({
+    method: "POST",
+    url: "/cart/clear.js",
+    failOnStatusCode: false,
   });
 });
