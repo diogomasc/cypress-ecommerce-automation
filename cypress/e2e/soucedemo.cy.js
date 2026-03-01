@@ -37,4 +37,36 @@ describe("Gestão do Carrinho de Compras", () => {
       "Total £55.00",
     );
   });
+
+  it("Alterar a quantidade de um item no carrinho", () => {
+    // 1. Acessar a página inicial do site
+    cy.visit("/");
+
+    // 2. Clicar no produto "Grey jacket" para acessar a página de detalhes do produto
+    cy.get("#product-1").click();
+
+    // 3. Na página de detalhes do produto, clicar no botão "Add to cart" para adicionar o produto ao carrinho
+    cy.get("#add").should("be.visible").click();
+
+    // 4. Validar que o carrinho de compras foi atualizado com o produto adicionado, verificando o número de itens no ícone do carrinho
+    cy.get(".cart-target", { timeout: 3000 }).should("contain", "(1)");
+
+    // 5. Acessar a página do carrinho de compras para validar os detalhes do produto adicionado
+    cy.visit("/cart");
+
+    // 6. Alterar a quantidade do item "Grey jacket" para 2 unidades
+    cy.get(".quantity.tr input").clear().type("2");
+
+    // 7. Clicar no botão "Update" para atualizar a quantidade do item no carrinho
+    cy.get("#update").should("be.visible").click();
+
+    // 7. Validar que o total do item foi atualizado corretamente para refletir a nova quantidade (preço unitário x nova quantidade)
+    cy.get(".two.columns.total.desktop").should("contain", "£110.00");
+
+    // 8. Validar que o total do carrinho também foi atualizado para refletir a nova quantidade
+    cy.get(".six.columns.omega.cart.total h2").should(
+      "contain",
+      "Total £110.00",
+    );
+  });
 });
