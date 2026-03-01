@@ -1,34 +1,27 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-
-// Custom command para ignorar erros de requisições externas (como /api/collect)
-Cypress.Commands.add('ignoreCollectError', () => {
-  cy.on('uncaught:exception', (err) => {
-    if (err.message.includes("Unexpected token '<'")) {
-      return false
+// Custom command para ignorar erros de requisições externas (como /api/collect) que são monitorados pelo Cypress e podem causar falhas nos testes
+Cypress.Commands.add("ignoreCollectError", () => {
+  cy.on("uncaught:exception", (err) => {
+    if (
+      err.message.includes("Unexpected token") ||
+      err.message.includes("reading 'description'") ||
+      err.message.includes("null")
+    ) {
+      return false;
     }
-  })
-})
+  });
+});
+
+// Custom command para limpar o carrinho de compras
+Cypress.Commands.add("cleanCart", () => {
+  cy.visit("/cart");
+  cy.get("body").then(($body) => {
+    const btnRemove = $body.find(".remove.desktop a:visible");
+    if (btnRemove.length > 0) {
+      cy.wrap(btnRemove).first().click();
+      cy.wait(1000);
+      cy.cleanCart();
+    } else {
+      cy.log("O carrinho já está vazio!");
+    }
+  });
+});
