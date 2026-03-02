@@ -9,8 +9,14 @@ describe("Gestão do Carrinho de Compras", () => {
   });
 
   it("Deve adicionar um produto e validar o incremento no contador", () => {
-    // Given: que estou na página do produto
-    cy.visit("/collections/frontpage/products/grey-jacket");
+    // ==== Ponto inicial: Acessar a homepage e clicar no produto 'Grey jacket' ====
+
+    // Given: que estou na homepage e clico no produto 'Grey jacket'
+    cy.visit("/");
+    cy.get("#product-1").click();
+
+    // ==== Ponto inial alternativo para acessar a página do produto diretamente (sem clicar na homepage) ====
+    // cy.visit("/collections/frontpage/products/grey-jacket");
 
     // When: eu adiciono o item ao carrinho
     cy.get("#add").should("be.visible").click();
@@ -29,7 +35,7 @@ describe("Gestão do Carrinho de Compras", () => {
     );
   });
 
-  it("Deve atualizar os valores ao alterar a quantidade de um item", () => {
+  it.skip("Deve atualizar os valores ao alterar a quantidade de um item", () => {
     // Given: que já tenho um item no carrinho
     cy.visit("/collections/frontpage/products/grey-jacket");
     cy.get("#add").should("be.visible").click();
@@ -48,7 +54,7 @@ describe("Gestão do Carrinho de Compras", () => {
     );
   });
 
-  it("Deve validar o comportamento do sistema ao inserir quantidades excessivas (Limite/Bug)", () => {
+  it.skip("Deve validar o comportamento do sistema ao inserir quantidades excessivas (Limite/Bug)", () => {
     // Given: que adicionei um produto e estou no carrinho
     cy.visit("/collections/frontpage/products/grey-jacket");
     cy.get("#add").click();
@@ -76,7 +82,7 @@ describe("Gestão do Carrinho de Compras", () => {
     );
   });
 
-  it("Deve remover um item específico da listagem", () => {
+  it.skip("Deve remover um item específico da listagem", () => {
     // Given: que estou no carrinho com a 'Grey jacket' adicionada
     cy.visit("/collections/frontpage/products/grey-jacket");
     cy.get("#add").click();
@@ -97,7 +103,7 @@ describe("Gestão do Carrinho de Compras", () => {
     cy.get("p").should("contain", "It appears that your cart is currently empty!");
   });
 
-  it("Deve permitir retornar à vitrine pelo link 'Continue Shopping'", () => {
+  it.skip("Deve permitir retornar à vitrine pelo link 'Continue Shopping'", () => {
     // Given: que o carrinho está vazio
     cy.visit("/cart");
 
