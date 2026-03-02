@@ -35,7 +35,7 @@ describe("Gestão do Carrinho de Compras", () => {
     );
   });
 
-  it.skip("Deve atualizar os valores ao alterar a quantidade de um item", () => {
+  it("Deve atualizar os valores ao alterar a quantidade de um item", () => {
     // Given: que já tenho um item no carrinho
     cy.visit("/collections/frontpage/products/grey-jacket");
     cy.get("#add").should("be.visible").click();
@@ -54,7 +54,7 @@ describe("Gestão do Carrinho de Compras", () => {
     );
   });
 
-  it.skip("Deve validar o comportamento do sistema ao inserir quantidades excessivas (Limite/Bug)", () => {
+  it("Deve validar o comportamento do sistema ao inserir quantidades excessivas (Limite/Bug)", () => {
     // Given: que adicionei um produto e estou no carrinho
     cy.visit("/collections/frontpage/products/grey-jacket");
     cy.get("#add").click();
@@ -82,7 +82,7 @@ describe("Gestão do Carrinho de Compras", () => {
     );
   });
 
-  it.skip("Deve remover um item específico da listagem", () => {
+  it("Deve remover um item específico da listagem", () => {
     // Given: que estou no carrinho com a 'Grey jacket' adicionada
     cy.visit("/collections/frontpage/products/grey-jacket");
     cy.get("#add").click();
@@ -103,7 +103,7 @@ describe("Gestão do Carrinho de Compras", () => {
     cy.get("p").should("contain", "It appears that your cart is currently empty!");
   });
 
-  it.skip("Deve permitir retornar à vitrine pelo link 'Continue Shopping'", () => {
+  it("Deve permitir retornar à vitrine pelo link 'Continue Shopping'", () => {
     // Given: que o carrinho está vazio
     cy.visit("/cart");
 
