@@ -1,14 +1,3 @@
-Linguagem de Especificação de Comportamento (Gherkin) para testes de funcionalidades do e-commerce "Sauce Demo".:
-
-  Feature: Recurso
-  Scenario: Cenário
-  Given: Dado que
-  When: Quando
-  And: E
-  Then: Então
-
----
-
 Feature: Gestão do Carrinho de Compras
   Como um usuário do e-commerce
   Quero gerenciar os itens no meu carrinho
@@ -18,33 +7,35 @@ Feature: Gestão do Carrinho de Compras
     Given que estou na vitrine de produtos do site "Sauce Demo"
     When eu seleciono o produto "Grey jacket"
     And clico no botão "Add to cart"
-    And clico no ícone do carrinho no canto superior direito
-    Then o sistema deve exibir o produto "Grey jacket" no carrinho
-    And o valor exibido deve ser de "£55.00"
+    Then o contador do carrinho no cabeçalho deve exibir "(1)"
+    And ao acessar o carrinho devo visualizar o item "Grey jacket" com o valor "£55.00"
 
   Scenario: Alterar a quantidade de um item no carrinho
     Given que possuo o item "Grey jacket" no meu carrinho
     When eu acesso a página do carrinho
-    And altero o campo "Qty" para um novo valor numérico
-    And clico em "Update" ou pressiono Enter
-    Then o sistema deve atualizar o valor total com base na nova quantidade
+    And altero o campo "Qty" para "2"
+    And clico no botão "Update"
+    Then o sistema deve atualizar o valor total do item para "£110.00"
+    And o total geral do carrinho deve ser atualizado para "£110.00"
 
   Scenario: Erro ao inserir quantidade excessiva (Bug Detectado)
-    Given que possuo itens no carrinho
-    When eu informo uma quantidade igual ou maior que "1000001" no campo "Qty"
-    Then o sistema deve exibir a mensagem de erro "Something went wrong"
-    And a transação não deve ser processada
+    Given que possuo o item "Grey jacket" no meu carrinho
+    When eu informo a quantidade "1000001" no campo "Qty"
+    And clico no botão "Update"
+    Then o sistema deve redirecionar para uma página de erro
+    And deve exibir a mensagem "Something went wrong."
 
   Scenario: Remover um produto do carrinho
     Given que o item "Grey jacket" está no carrinho
-    When eu clico no botão "Remove" associado ao produto
-    Then o produto deve ser removido da listagem
-    And o contador (badge) do carrinho deve ser atualizado para zero ou desaparecer
+    When eu clico no botão "Remove" (x) associado ao produto na listagem
+    Then o produto deve desaparecer da página do carrinho
+    And a mensagem "It appears that your cart is currently empty!" deve ser exibida
+    And o contador do carrinho no cabeçalho deve retornar para "(0)"
 
-  Scenario: Retornar à vitrine através do botão "Continue Shopping"
+ Scenario: Retornar à vitrine através do botão "Continue Shopping"
     Given que estou na página do carrinho
-    When eu clico no botão "Continue Shopping" abaixo da lista de produtos
-    Then o sistema deve me redirecionar de volta para a vitrine de produtos
+    When eu clico no link "Continue Shopping"
+    Then o sistema deve me redirecionar para a página de coleções "/collections/all"
 
 Feature: Fluxo de Checkout
   Como um cliente (convidado ou logado)
