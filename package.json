@@ -1,7 +1,7 @@
 {
   "name": "bootcam-soucedemo",
   "version": "1.0.0",
-  "description": "Projeto de testes automatizados com Cypress, cobrindo cenários de gestão de carrinho de compras e fluxo de checkout. Desenvolvido como parte do Bootcamp de Quality Assurance da Avanti.",
+  "description": "Projeto prático do Bootcamp de QA da Avanti. Automação de testes E2E com Cypress simulando uma esteira completa de e-commerce (Sauce Demo/Shopify), cobrindo jornadas críticas de login, registro dinâmico, catálogo, carrinho e checkout.",
   "main": "index.js",
   "type": "module",
   "engines": {
@@ -11,7 +11,11 @@
     "cypress:web": "npx cypress open",
     "cypress:headless": "npx cypress run --browser electron"
   },
-  "keywords": [],
+  "keywords": [
+    "cypress",
+    "qa",
+    "automation"
+  ],
   "author": "Diogo Mascarenhas Ferreira Santos",
   "license": "ISC",
   "devDependencies": {
