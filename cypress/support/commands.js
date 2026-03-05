@@ -22,38 +22,48 @@ Cypress.Commands.add("cleanCart", () => {
   });
 });
 
-// Comando customizado para criar uma conta de usuário
-Cypress.Commands.add("createAccount", () => {
-  const user = {
-    firstName: faker.person.firstName(),
-    lastName: faker.person.lastName(),
-    email: faker.internet.email(),
-    password: faker.internet.password({ length: 12 }),
-  };
-
-  // 1. Navegação e preenchimento
-  cy.visit("/account/register", { failOnStatusCode: false });
-
-  cy.get("#first_name").should("be.visible").type(user.firstName);
-  cy.get("#last_name").type(user.lastName);
-  cy.get("#email").type(user.email);
-  cy.get("#password").type(user.password);
-
-  // 2. Submissão
-  cy.get(".action_bottom").contains("Create").click();
-
-  // 3. Validação de Fluxo
-  cy.url().should("include", "/");
-
-  // 4. Validação de Persistência na conta
-  cy.visit("/account");
-  cy.get(".sidebar .customer-name", { timeout: 10000 })
+// Comando para navegar até a página de login
+Cypress.Commands.add('navigateToLoginPage', () => {
+  cy.get("#customer_login_link")
     .should("be.visible")
-    .and("contain", `${user.firstName} ${user.lastName}`);
+    .and("contain", "Log In")
+    .click();
+});
 
-  // 5. Faz logout para garantir que o estado da conta não interfira em outros testes
-  cy.contains("a", "Log Out").click();
+// Comando para navegar até a página de registro de novo usuário
+Cypress.Commands.add('navigateToRegisterPage', () => {
+  cy.get("#customer_register_link")
+    .should("be.visible")
+    .and("contain", "Sign up")
+    .click();
+});
 
-  // 6. Retorna o objeto para uso nos testes
-  return cy.wrap(user);
+// Comando para navegar até a página de conta
+Cypress.Commands.add('navigateToAccountPage', () => {
+  cy.contains("a", "My Account")
+    .should("be.visible")
+    .click();
+});
+
+// Comando para navegar até a página de logout
+Cypress.Commands.add('navigateToLogoutPage', () => {
+  cy.get("#customer_logout_link")
+    .should("be.visible")
+    .and("contain", "Log Out")
+    .click();
+});
+
+// Comando para navegar até o carrinho
+Cypress.Commands.add('navigateToCartPage', () => {
+  cy.get("#minicart")
+    .find("a.checkout")
+    .should("be.visible")
+    .click();
+});
+
+// Comando para navegar até o catálogo via menu principal
+Cypress.Commands.add('navigateToCatalogPage', () => {
+  cy.get("#main-menu a[href='/collections/all']")
+    .should("be.visible")
+    .click();
 });
