@@ -2,6 +2,9 @@
 
 Este repositório contém uma automação de testes E2E (End-to-End) utilizando o framework [Cypress](https://www.cypress.io/). Este projeto foi desenvolvido para garantir a qualidade das funcionalidades principais de uma loja virtual fictícia baseada no ambiente de testes [Sauce Demo via Shopify](https://sauce-demo.myshopify.com/).
 
+![alt text](image.png)
+![alt text](image-1.png)
+
 ## 🎯 Funcionalidades Cobertas (Features)
 
 Os testes foram organizados de forma descritiva ("Passo a passo") detalhando cenários críticos do e-commerce:
