@@ -10,7 +10,7 @@ describe("Feature: Carrinho de Compras", () => {
     cy.wait(3000);
   });
 
-  it("Passo a passo: Adição de produto e validação de resumo no checkout", () => {
+  it("Passo a passo: Adição de produto e validação de resumo no cart", () => {
     // 1. Acessar a página específica do produto 'Grey jacket'
     cy.visit("/collections/frontpage/products/grey-jacket");
 
